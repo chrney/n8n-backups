@@ -1,0 +1,540 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking \"Test workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Get base data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get base data": {
+      "main": [
+        [
+          {
+            "node": "Get municipalities data",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Remove data bransch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove data bransch": {
+      "main": [
+        [
+          {
+            "node": "Compare Datasets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get municipalities data": {
+      "main": [
+        [
+          {
+            "node": "Remove data bransch from HBR call",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compare Datasets": {
+      "main": [
+        [
+          {
+            "node": "Add new items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        [
+          {
+            "node": "Update changed items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Delete if only in HBR",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add new items": {
+      "main": [
+        [
+          {
+            "node": "Merge data, add source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update changed items": {
+      "main": [
+        [
+          {
+            "node": "Merge data, add source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete if only in HBR": {
+      "main": [
+        [
+          {
+            "node": "Merge data, add source",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Remove data bransch from HBR call": {
+      "main": [
+        [
+          {
+            "node": "Rename Keys",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rename Keys": {
+      "main": [
+        [
+          {
+            "node": "Compare Datasets",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge data, add source": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get base data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "createdAt": "2024-03-22T12:36:26.087Z",
+  "id": "wuAKndcRqaTWcj5s",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Sync, only changes",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "8a15bf1e-8d1a-40b9-bf8d-e9e43043748f",
+      "name": "When clicking \"Test workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        360,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "id",
+              "field2": "id"
+            }
+          ]
+        },
+        "resolve": "preferInput1",
+        "options": {}
+      },
+      "id": "671db574-caf0-4ebc-a776-9494e99d68ae",
+      "name": "Compare Datasets",
+      "type": "n8n-nodes-base.compareDatasets",
+      "typeVersion": 2.3,
+      "position": [
+        1340,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://base.gov.ax/items/municipalities666",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "limit",
+              "value": "-1"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0712a81c-4d2f-442b-a8ef-d0d382859bb5",
+      "name": "Get base data",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        680,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data",
+        "options": {}
+      },
+      "id": "af462686-dbcb-4b0f-8753-91952d8d7ec6",
+      "name": "Remove data bransch",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        900,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://hembygdsratt.gov.ax/items/municipalities",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "limit",
+              "value": "-1"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "65d0002b-0029-45ca-802a-a293f9610f91",
+      "name": "Get municipalities data",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        700,
+        760
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "xwPkoBDdDY1jnH9x",
+          "name": "HBR API-key Christoph"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://hembygdsratt.gov.ax/items/municipalities/{{ $json.id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "=name",
+              "value": "={{ $json.name }}"
+            },
+            {
+              "name": "on_aland",
+              "value": "={{ $json.on_aland }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ed312e82-0f3b-47fd-b263-97331e20e4c8",
+      "name": "Update changed items",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1720,
+        880
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "xwPkoBDdDY1jnH9x",
+          "name": "HBR API-key Christoph"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://hembygdsratt.gov.ax/items/municipalities",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "code",
+              "value": "={{ $json.id }}"
+            },
+            {
+              "name": "name",
+              "value": "={{ $json.name }}"
+            },
+            {
+              "name": "=on_aland",
+              "value": "={{ $json.on_aland }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d457f1dd-fe3f-47b2-afcc-1469b420c128",
+      "name": "Add new items",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1720,
+        340
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "xwPkoBDdDY1jnH9x",
+          "name": "HBR API-key Christoph"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "DELETE",
+        "url": "=https://hembygdsratt.gov.ax/items/municipalities/{{ $json.id }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {}
+      },
+      "id": "7811731d-71a4-4968-9acf-77f83bba0988",
+      "name": "Delete if only in HBR",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1720,
+        1120
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "xwPkoBDdDY1jnH9x",
+          "name": "HBR API-key Christoph"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data",
+        "options": {}
+      },
+      "id": "5dc46958-ee94-4d9b-8b1c-56785d2d0b90",
+      "name": "Remove data bransch from HBR call",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        900,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "keys": {
+          "key": [
+            {
+              "currentKey": "code",
+              "newKey": "id"
+            }
+          ]
+        },
+        "additionalOptions": {}
+      },
+      "id": "f54170f7-ca37-4f13-b2eb-425607c2afe0",
+      "name": "Rename Keys",
+      "type": "n8n-nodes-base.renameKeys",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        760
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "christoph.neymeyr@regeringen.ax",
+        "toEmail": "christoph.neymeyr@regeringen.ax",
+        "subject": "=Syncing municipalities: {{ $json.source }}",
+        "html": "=Details: {{ $json.output }}\n",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "2f4cb0bc-1e81-4216-9996-db5948e8ba55",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        2760,
+        580
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "sNzPT6w8fbdiVHeK",
+          "name": "smtp-relay.regeringen.ax"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const output = $input.all().map(item => {\n  if (item.json.data) {\n    return item.json.data.name;\n  }\n  return item.json.name\n}).join(', ');\nreturn { \n  \"source\": $prevNode.name,\n  output \n};\n"
+      },
+      "id": "1032e629-9f4b-4a7f-b73e-9b9156450a89",
+      "name": "Merge data, add source",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2060,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 1
+            }
+          ]
+        }
+      },
+      "id": "1e42e896-e5bb-407d-8b0c-d81e82977cbb",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        360,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "fb0ac86c-ee5c-4d6f-a8ae-c1422f7c4fbe",
+              "leftValue": "={{ $json.output.length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "226d5969-671e-4716-96f2-5ed5c2bdd5d3",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        2280,
+        580
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Helsinki",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "F0NT1lxWTHV0RFzT"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2024-03-22T12:35:54.109Z",
+      "updatedAt": "2024-03-22T12:35:54.109Z",
+      "id": "D7a4zlkxklhGPob9",
+      "name": "base"
+    },
+    {
+      "createdAt": "2024-03-22T12:35:54.118Z",
+      "updatedAt": "2024-03-22T12:35:54.118Z",
+      "id": "NBTN2F9cr9f5p4a6",
+      "name": "hbr"
+    },
+    {
+      "createdAt": "2024-03-22T12:35:54.112Z",
+      "updatedAt": "2024-03-22T12:35:54.112Z",
+      "id": "SI2faPam5USy1Nto",
+      "name": "municipalities"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2024-03-25T13:05:07.000Z",
+  "versionId": "d0e213bc-3b73-4c1b-83e6-16a28fd6f2d7"
+}
