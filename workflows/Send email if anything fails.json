@@ -1,0 +1,67 @@
+{
+  "active": false,
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-03-25T12:59:05.239Z",
+  "id": "F0NT1lxWTHV0RFzT",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Send email if anything fails",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "31ac70d6-02ef-4021-b64b-e2d6cd05697b",
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        340,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "no-reply@regeringen.ax",
+        "toEmail": "christoph.neymeyr@regeringen.ax",
+        "subject": "=Error in workflow \"{{ $json.workflow.name }}\"",
+        "html": "=The workflow \"{{ $json.workflow.name }}\" has failed due to an error, \"{{ $json.execution.error.message }}\". It's available at\n {{ $json.execution.url }}. \n\nHere is a stacktrace of the error: \n\n{{ JSON.stringify($json.execution.error) }}\n\n",
+        "options": {}
+      },
+      "id": "501d5799-cddd-48ec-98ef-163d6adce088",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        560,
+        280
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "sNzPT6w8fbdiVHeK",
+          "name": "smtp-relay.regeringen.ax"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-03-25T13:02:54.000Z",
+  "versionId": "8a283f22-b768-4d53-9b2a-e121496f5298"
+}
