@@ -1,0 +1,180 @@
+{
+  "active": false,
+  "connections": {
+    "Set - Prepare fields": {
+      "main": [
+        [
+          {
+            "node": "Create or Update record in Google Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Customer Datastore - Generate some data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Customer Datastore - Generate some data": {
+      "main": [
+        [
+          {
+            "node": "Set - Prepare fields",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Customer Datastore (n8n training)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-03-29T10:53:44.748Z",
+  "id": "zJ2MPxINiud2C7pj",
+  "meta": {
+    "templateId": "1751"
+  },
+  "name": "Preparing data to be sent to a service",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        740,
+        300
+      ],
+      "typeVersion": 1,
+      "id": "8de70829-b20c-421a-a06e-b4f6be5f3a81"
+    },
+    {
+      "parameters": {
+        "content": "### Very often your data is not in the right format to insert in a node. you can use the set node to fix it.\n\n### Click the `Execute Workflow` button and double click on the nodes to see the input and output items.",
+        "height": 200,
+        "width": 320
+      },
+      "name": "Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        380,
+        240
+      ],
+      "typeVersion": 1,
+      "id": "de8b3614-0863-47a0-8450-07a9eb4fab98"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "operation": "upsert",
+        "sheetId": "13_bAEYNTzVXVY6SfAkBa9ijtJGSxPd8D-hcXXwXtdDo",
+        "range": "A:C",
+        "options": {}
+      },
+      "name": "Create or Update record in Google Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        1500,
+        300
+      ],
+      "typeVersion": 1,
+      "id": "733bad4c-7534-4e6c-8e27-74f03d80c322"
+    },
+    {
+      "parameters": {
+        "content": "\nThis is where we put the data in the format that Google Sheets expect. \nThis means changing the field name from `name` to `Full name`, dropping all fields except `ID`, `Email` and adding a `Created time` field",
+        "height": 280,
+        "width": 400
+      },
+      "name": "Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1060,
+        180
+      ],
+      "typeVersion": 1,
+      "id": "905eff49-8168-4472-b458-5f97b47b2979"
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "number": [
+            {
+              "name": "ID",
+              "value": "={{$json[\"id\"]}}"
+            }
+          ],
+          "string": [
+            {
+              "name": "Full name",
+              "value": "={{$json[\"name\"]}}"
+            },
+            {
+              "name": "Email",
+              "value": "={{$json[\"email\"]}}"
+            },
+            {
+              "name": "Created time",
+              "value": "={{$now}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Set - Prepare fields",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1200,
+        300
+      ],
+      "notesInFlow": false,
+      "typeVersion": 1,
+      "id": "d985a8c3-09ba-42a4-97ec-4da5f18b75a8",
+      "notes": "Prepare fields"
+    },
+    {
+      "parameters": {
+        "operation": "getAllPeople"
+      },
+      "name": "Customer Datastore - Generate some data",
+      "type": "n8n-nodes-base.n8nTrainingCustomerDatastore",
+      "position": [
+        920,
+        300
+      ],
+      "typeVersion": 1,
+      "id": "5e2e0b64-f26d-447e-8f8b-fc2555e661bf"
+    },
+    {
+      "parameters": {},
+      "id": "0be44dbf-6c9b-4dac-8470-13dfb991d731",
+      "name": "Customer Datastore (n8n training)",
+      "type": "n8n-nodes-base.n8nTrainingCustomerDatastore",
+      "typeVersion": 1,
+      "position": [
+        1340,
+        300
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-03-29T10:53:44.748Z",
+  "versionId": "733867b5-37aa-40a4-8ec0-3dac17b4b02c"
+}
